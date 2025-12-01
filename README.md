@@ -2,6 +2,7 @@
 
 ## Resources to learn from
 
+- [TailwindCSS VScode Extention (Recommended)](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
 - [Tailwindcss Docs](https://tailwindcss.com/docs/installation/using-vite);
 - [Next.js (react)](https://nextjs.org/docs)
   <br/>
