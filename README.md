@@ -8,7 +8,7 @@
 - [React.js Basics YT](https://www.youtube.com/watch?v=SqcY0GlETPk&pp=ygUOcmVhY3RqcyBiYXNpY3M%3D)
 - [Tailwindcss Basics YT](https://www.youtube.com/watch?v=pfaSUYaSgRo&pp=ygUSdGFpbHdpbmRjc3MgYmFzaWNz)
   <br/>
-  # Any problems or specific questions, use ai.
+#### Any problems or specific questions, use ai.
 - [ChatGPT](https://chatgpt.com)
 - [Claude (Recommended)](https://claude.ai/new)
 - [Gemini](https://gemini.google.com/app)
