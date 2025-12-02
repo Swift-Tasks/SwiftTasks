@@ -5,8 +5,8 @@ declare global {
   var db: ReturnType<typeof drizzle> | undefined;
 }
 
-export const dbInstance = global.db ?? drizzle(env.DB_FILE!);
+export const db = global.db ?? drizzle(env.DB_FILE!);
 
 if (!global.db) {
-  global.db = dbInstance;
+  global.db = db;
 }

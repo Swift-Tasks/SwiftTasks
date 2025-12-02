@@ -3,6 +3,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/styles/globals.css";
+import { Toaster } from "@/components/ui/toaster";
+import { AuthProvider } from "@/components/auth-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +18,6 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "SwiftTasks",
-  // description: "Genera÷3ted by create next app",
 };
 
 export default function RootLayout({
@@ -27,9 +28,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-primary antialiased`}
       >
-        {children}
+        <AuthProvider>
+          {children}
+          <Toaster />
+        </AuthProvider>
       </body>
     </html>
   );
