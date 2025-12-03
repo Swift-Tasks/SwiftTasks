@@ -7,14 +7,15 @@ export default function HomePage() {
         <img className="w-[150px]" src="/images/SwifTaskLogo.png" alt="Logo" />
 
         <h1>Hello, User!</h1>
-        <a href="/dashboard" className="flex justify-between items-center">
-        <Image 
-  className="w-12 h-12" 
-  src="/images/user_profile_icon.png" 
-  alt="profile"
-  width={48}
-  height={48}
-/></a>
+      <a href="/dashboard" className="block">
+  <Image 
+    className="w-12 h-12 hover:scale-120 hover:brightness-120 transition-all duration-200 cursor-pointer"
+    src="/images/user_profile_icon-removebg-bgremove.png" 
+    alt="profile"
+    width={48}
+    height={48}
+  />
+</a>
       </div>
 
       <div className="flex justify-center items-center h-[calc(100vh-250px)] gap-8 px-12">
