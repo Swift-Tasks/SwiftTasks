@@ -35,3 +35,15 @@ git add .
 git commit -m "EXPLAIN YOUR CHANGES HERE IN DEPTH - YOUR NAME - DATE"
 git push --set-upstream origin main
 ```
+
+### Database Setup (only do this once)
+
+*Add environment variables from teasms chat.*
+
+```sh
+bunx drizzle-kit generate
+```
+
+```sh
+bunx drizzle-kit migrate
+```
