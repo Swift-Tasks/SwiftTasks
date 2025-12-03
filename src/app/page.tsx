@@ -1,12 +1,19 @@
 import { ProtectedRoute } from "@/components/protected-route";
-
+import Image from 'next/image';
 export default function HomePage() {
   return (
     <ProtectedRoute>
-      <div className="w-screen flex items-center gap-4 pt-4 pl-4">
+      <div className="w-screen flex items-center justify-between gap-4 pt-4 px-4">
         <img className="w-[150px]" src="/images/SwifTaskLogo.png" alt="Logo" />
 
         <h1>Hello, User!</h1>
+        <Image 
+  className="w-12 h-12" 
+  src="/images/user_profile_icon.png" 
+  alt="profile"
+  width={48}
+  height={48}
+/>
       </div>
 
       <div className="flex justify-center items-center h-[calc(100vh-250px)] gap-8 px-12">
@@ -32,7 +39,7 @@ export default function HomePage() {
         {/* </link> */}
         {/* Second box - placeholder */}
       <div className="max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow min-h-[400px]">
-        <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+        <h2 className="text-xl font-semibold mb-4 flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-[#FFB900]  lucide lucide-calendar-fold-icon lucide-calendar-fold"><path d="M3 20a2 2 0 0 0 2 2h10a2.4 2.4 0 0 0 1.706-.706l3.588-3.588A2.4 2.4 0 0 0 21 16V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"/><path d="M15 22v-5a1 1 0 0 1 1-1h5"/><path d="M8 2v4"/><path d="M16 2v4"/><path d="M3 10h18"/></svg>
           Your Timetable:</h2>
         {/* Add your content here */}
