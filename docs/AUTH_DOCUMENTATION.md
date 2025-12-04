@@ -134,21 +134,6 @@ The system prevents errors by:
 3. **useAuth** hook provides `isLoading` state
 4. Only renders content after auth is confirmed
 
-## Files Created/Modified
-
-### New Files
-
-- `src/middleware.ts` - Route protection
-- `src/components/auth-provider.tsx` - Auth context
-- `src/components/protected-route.tsx` - Protected route wrapper
-- `src/app/signup/page.tsx` - Separate signup page
-
-### Modified Files
-
-- `src/app/layout.tsx` - Added AuthProvider
-- `src/app/signin/page.tsx` - Sign in only (no toggle)
-- `src/server/auth.ts` - Added schema to adapter
-- `src/app/dashboard/page.tsx` - Example protected page
 
 ## Environment Variables Required
 
