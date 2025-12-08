@@ -23,19 +23,25 @@ export default function HomePage() {
         {/* <link href="/dashboard"> */}
         <div className="max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow min-h-[500px]">
           <h2 className="text-xl font-semibold mb-4 flex  items-center gap-2">
-            <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"  className="text-[#FFB900] lucide lucide-clipboard-clock-icon lucide-clipboard-clock"><path d="M16 14v2.2l1.6 1"/><path d="M16 4h2a2 2 0 0 1 2 2v.832"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2"/><circle cx="16" cy="16" r="6"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
+            <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"  className="text-[#FFB900] lucide lucide-clipboard-clock-icon lucide-clipboard-clock"><path d="M16 14v2.2l1.6 1"/><path d="M16 4h2a2 2 0 0 1 2 2v.832"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2"/><circle cx="16" cy="16" r="6"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
             Assignments Due:
           </h2>
           <div className="space-y-3">
-            <a href="/dashboard" className="flex justify-between items-center hover:shadow-lg transition-shadow">
+            <a href="/dashboard" className="flex justify-between items-center hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105">
               <span>Cyber Security</span>
               <span className="text-gray-600 ">Due: Dec 5th, 2025</span>
             </a>
-            <a href="/dashboard" className="flex justify-between items-center hover:shadow-lg transition-shadow">
+            <a href="/dashboard" className="flex justify-between items-center hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105">
               <span>Cloud Tech</span>
               <span className="text-gray-600">Due: Dec 5th, 2025</span>
-
-              
+            </a>
+            <a href="/dashboard" className="flex justify-between items-center hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105">
+              <span>Cyber Security</span>
+              <span className="text-gray-600 ">Due: Dec 5th, 2025</span>
+            </a>
+            <a href="/dashboard" className="flex justify-between items-center hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105">
+              <span>Cloud Tech</span>
+              <span className="text-gray-600">Due: Dec 5th, 2025</span>
             </a>
           </div>
         </div>
