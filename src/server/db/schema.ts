@@ -118,7 +118,7 @@ export const assignment = sqliteTable(
     deadline: integer("created_at", { mode: "timestamp_ms" })
       .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
       .notNull(),
-      
+
     createdAt: integer("created_at", { mode: "timestamp_ms" })
       .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
       .notNull(),
@@ -158,5 +158,5 @@ export const task = sqliteTable(
       .$onUpdate(() => /* @__PURE__ */ new Date())
       .notNull(),
   },
-  (table) => [index("assignment_id_idx").on(table.id)]
+  (table) => [index("task_id_idx").on(table.id)]
 );
