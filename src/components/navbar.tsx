@@ -40,7 +40,7 @@ export function Navbar() {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200">
+    <nav className=" sticky ">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link
@@ -57,7 +57,7 @@ export function Navbar() {
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex items-center gap-2 rounded-lg p-2 hover:bg-gray-100 transition-colors"
+              className="flex items-center gap-2 rounded-lg p-2 hover:bg-foreground/10 cursor-pointer transition-colors"
             >
               <Avatar src={user?.image} name={user?.name} alt={user?.name} />
               <svg
@@ -139,7 +139,7 @@ export function Navbar() {
 
                   <button
                     onClick={handleSignOut}
-                    className="flex w-full items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                    className="flex w-full cursor-pointer items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
                   >
                     <svg
                       className="h-5 w-5"
