@@ -3,6 +3,7 @@ import Image from 'next/image';
 export default function HomePage() {
   return (
     <ProtectedRoute>
+      
       <div className="w-screen flex items-center justify-between gap-4 pt-4 px-4">
         <img className="w-[150px]" src="/images/SwifTaskLogo.png" alt="Logo" />
 
@@ -26,9 +27,9 @@ export default function HomePage() {
             Assignments Due:
           </h2>
           <div className="space-y-3">
-            <a href="/dashboard" className="flex justify-between items-center">
+            <a href="/dashboard" className="flex justify-between items-center hover:shadow-lg transition-shadow">
               <span>Cyber Security</span>
-              <span className="text-gray-600 hover:shadow-lg transition-shadow">Due: Dec 5th, 2025</span>
+              <span className="text-gray-600 ">Due: Dec 5th, 2025</span>
             </a>
             <a href="/dashboard" className="flex justify-between items-center hover:shadow-lg transition-shadow">
               <span>Cloud Tech</span>
