@@ -47,3 +47,8 @@ bunx drizzle-kit generate
 ```sh
 bunx drizzle-kit migrate
 ```
+
+### Setup Command
+```sh
+npm i; npx drizzle-kit migrate; npx drizzle-kit migrate; npm run dev
+```
