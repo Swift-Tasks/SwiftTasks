@@ -18,6 +18,7 @@ export const auth = betterAuth({
       clientSecret: env.MICROSOFT_CLIENT_SECRET,
     },
   },
+
   secret: env.BETTER_AUTH_SECRET,
   baseURL: env.BETTER_AUTH_URL,
 });
