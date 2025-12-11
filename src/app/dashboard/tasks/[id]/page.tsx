@@ -870,7 +870,6 @@ export default function DashboardPage() {
                     onChange={(value) => setContent(value || "")}
                     onMount={(editor) => {
                       editorRef.current = editor;
-                      // Track text selection for AI button
                       editor.onDidChangeCursorSelection(() => {
                         const selection = editor.getSelection();
                         if (selection) {
@@ -912,7 +911,6 @@ export default function DashboardPage() {
                         onChange={(value) => setContent(value || "")}
                         onMount={(editor) => {
                           editorRef.current = editor;
-                          // Track text selection for AI button
                           editor.onDidChangeCursorSelection(() => {
                             const selection = editor.getSelection();
                             if (selection) {

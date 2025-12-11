@@ -113,7 +113,6 @@ export default function Home() {
       };
       setTasks((prev) => [...prev, newTask]);
 
-      // Reset form
       setNewTaskText("");
       setNewTaskDate("");
       setNewTaskColor("cyan");
@@ -131,7 +130,6 @@ export default function Home() {
   return (
     <div className="min-h-screen flex items-center justify-center p-5 bg-gradient-to-br from-yellow-200 to-orange-300">
       <div className="bg-white w-full max-w-3xl p-10 rounded-2xl shadow-2xl">
-        {/* HEADER */}
         <div className="flex justify-between items-start mb-8">
           <div>
             <h1 contentEditable className="w-full">
@@ -170,7 +168,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ADD TASK FORM */}
         {showForm && (
           <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
             <h3 className="text-lg font-semibold mb-3">Add New Task</h3>
@@ -216,7 +213,6 @@ export default function Home() {
           </div>
         )}
 
-        {/* TASK LIST */}
         <ul className="space-y-2 overflow-y-scroll h-[400px] overflow-x-hidden">
           {tasks.map((task, i) => (
             <li
@@ -256,7 +252,6 @@ export default function Home() {
           ))}
         </ul>
 
-        {/* BUTTON */}
         <div className="text-center mt-6">
           <button className="text-gray-500 text-sm hover:text-gray-700 transition">
             Show More...

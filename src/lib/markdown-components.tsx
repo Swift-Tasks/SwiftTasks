@@ -145,12 +145,8 @@ export const createMarkdownComponents = (isDark: boolean): Components => ({
     }
     return <span {...props}>{children}</span>;
   },
-  // Custom component to handle HTML comments - they should be invisible in read mode
-  // This handles the rehype-raw parsed HTML comments
   comment: () => null,
-  // Also handle any HTML comments that come through as text nodes
   text: ({ value }: any) => {
-    // Filter out HTML comment syntax if it somehow gets through
     if (typeof value === "string" && value.trim().startsWith("<!--")) {
       return null;
     }

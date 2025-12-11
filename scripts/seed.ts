@@ -31,7 +31,6 @@ async function seed() {
 
   console.log(`✅ Created assignment: Introduction to Web Development`);
 
-  // Create 4 example tasks
   const tasks = [
     {
       id: `task_${Date.now()}_1`,
@@ -276,13 +275,11 @@ Use percentages instead of fixed widths:
     },
   ];
 
-  // Insert all tasks
   for (const taskData of tasks) {
     await db.insert(task).values(taskData);
     console.log(`✅ Created task: ${taskData.name}`);
   }
 
-  // Update assignment with task IDs
   const taskIds = tasks.map((t) => t.id).join(",");
   await db
     .update(assignment)

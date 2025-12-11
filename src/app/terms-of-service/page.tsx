@@ -60,11 +60,4 @@ If you have questions about these Terms, please contact us at:
 
 export default function TermsOfServicePage() {
   return <TermsOfService content={content} />;
-
-type Props = {
-  label: string;
-  onClick?: () => void;
-};
-
-
 }
