@@ -19,6 +19,36 @@ export const user = sqliteTable("user", {
     .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
     .$onUpdate(() => new Date())
     .notNull(),
+  canvasApiUrl: text("canvas_api_url"),
+  canvasApiToken: text("canvas_api_token"),
+  canvasLastSync: integer("canvas_last_sync", { mode: "timestamp_ms" }),
+  enabledCourses: text("enabled_courses"), // JSON array of course IDs
+  // General settings
+  autoCompleteExpired: integer("auto_complete_expired", {
+    mode: "boolean",
+  }).default(false),
+  autoCompleteAllTasks: integer("auto_complete_all_tasks", {
+    mode: "boolean",
+  }).default(false),
+  showCompletedAssignments: integer("show_completed_assignments", {
+    mode: "boolean",
+  }).default(true),
+  // Accessibility settings
+  fontFamily: text("font_family", {
+    enum: ["default", "dyslexic", "mono"],
+  }).default("default"),
+  fontSize: text("font_size", { enum: ["normal", "large", "larger"] }).default(
+    "normal"
+  ),
+  reducedMotion: integer("reduced_motion", { mode: "boolean" }).default(false),
+  highContrast: integer("high_contrast", { mode: "boolean" }).default(false),
+  // Theme settings
+  themeMode: text("theme_mode", { enum: ["light", "dark"] }).default("light"),
+  autoThemeEnabled: integer("auto_theme_enabled", { mode: "boolean" }).default(
+    true
+  ),
+  lightModeStart: text("light_mode_start").default("07:00"), // 7am
+  lightModeEnd: text("light_mode_end").default("20:00"), // 8pm
 });
 
 export const session = sqliteTable(
@@ -116,6 +146,8 @@ export const assignment = sqliteTable("assignment", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
+  canvasAssignmentId: text("canvas_assignment_id"),
+  canvasCourseId: text("canvas_course_id"),
   deadline: integer("created_at", { mode: "timestamp_ms" })
     .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
     .notNull(),

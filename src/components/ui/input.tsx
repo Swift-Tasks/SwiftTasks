@@ -11,7 +11,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <div className="w-full">
         <input
           type={type}
-          className={`flex h-12 w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 ${
+          className={`flex h-12 w-full rounded-lg border border-gray-200 dark:border-neutral-600 bg-white dark:bg-[oklch(0.228_0.013_286.375)] px-4 py-2 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-70 disabled:bg-gray-100 dark:disabled:bg-neutral-700 dark:disabled:text-gray-400 ${
             error
               ? "border-amber-500 focus:border-amber-500 focus:ring-amber-500"
               : ""

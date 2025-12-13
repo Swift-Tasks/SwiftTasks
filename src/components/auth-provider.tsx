@@ -1,7 +1,8 @@
 "use client";
 
-import { createContext, useContext, ReactNode } from "react";
+import { createContext, useContext, ReactNode, useEffect, useRef } from "react";
 import { useSession } from "@/lib/auth-client";
+import { checkAndSyncCanvasOnLogin } from "@/app/actions/canvas-sync";
 
 type User = {
   id: string;
@@ -31,6 +32,14 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { data: session, isPending } = useSession();
+  const syncTriggeredRef = useRef(false);
+
+  useEffect(() => {
+    if (session?.user?.id && !syncTriggeredRef.current) {
+      syncTriggeredRef.current = true;
+      checkAndSyncCanvasOnLogin(session.user.id).catch(console.error);
+    }
+  }, [session?.user?.id]);
 
   const value: AuthContextType = {
     session: session as Session | null,

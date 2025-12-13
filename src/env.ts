@@ -15,6 +15,8 @@ export const env = createEnv({
     OLLAMA_RATE_LIMIT_PER_HOUR: z.string().optional(),
     OLLAMA_TIMEOUT: z.string().optional(),
     OLLAMA_MAX_PROMPT_LENGTH: z.string().optional(),
+    CANVAS_API_URL: z.string().url().optional(),
+    CANVAS_API_TOKEN: z.string().optional(),
   },
   client: {
     NEXT_PUBLIC_BETTER_AUTH_URL: z.string().url().optional(),
@@ -33,5 +35,7 @@ export const env = createEnv({
     OLLAMA_RATE_LIMIT_PER_HOUR: process.env.OLLAMA_RATE_LIMIT_PER_HOUR,
     OLLAMA_TIMEOUT: process.env.OLLAMA_TIMEOUT,
     OLLAMA_MAX_PROMPT_LENGTH: process.env.OLLAMA_MAX_PROMPT_LENGTH,
+    CANVAS_API_URL: process.env.CANVAS_API_URL,
+    CANVAS_API_TOKEN: process.env.CANVAS_API_TOKEN,
   },
 });

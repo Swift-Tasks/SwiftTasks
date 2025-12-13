@@ -58,7 +58,7 @@ export function Navbar() {
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-2 rounded-lg p-2 hover:bg-foreground/10 cursor-pointer transition-colors outline-none">
+                <button className="flex items-center gap-2 rounded-lg p-2 hover:opacity-80 cursor-pointer transition-opacity outline-none">
                   <Avatar
                     src={user?.image}
                     name={user?.name}
@@ -68,7 +68,7 @@ export function Navbar() {
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                className="w-56 border-0 bg-white dark:bg-[var(--dark-bg)] z-[9999]"
+                className="w-56 border-0 bg-card dark:bg-card z-[9999]"
                 align="end"
               >
                 <DropdownMenuLabel>

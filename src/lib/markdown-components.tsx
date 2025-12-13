@@ -106,7 +106,7 @@ export const createMarkdownComponents = (isDark: boolean): Components => ({
     <thead className="bg-gray-100 dark:bg-neutral-800">{children}</thead>
   ),
   tbody: ({ children }) => (
-    <tbody className="divide-y divide-gray-200 dark:divide-neutral-700 bg-white dark:bg-neutral-900">
+    <tbody className="divide-y divide-gray-200 dark:divide-neutral-700 bg-card dark:bg-card">
       {children}
     </tbody>
   ),

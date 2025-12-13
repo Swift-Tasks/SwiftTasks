@@ -2,7 +2,7 @@ import * as React from "react";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "ghost";
+  variant?: "primary" | "secondary" | "outline" | "ghost" | "foreground";
   loading?: boolean;
 }
 
@@ -19,16 +19,19 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      "inline-flex items-center cursor-pointer justify-center rounded-lg px-6 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
+      "inline-flex items-center cursor-pointer justify-center rounded-lg px-6 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50";
 
     const variantStyles = {
-      primary: "bg-amber-100 hover:bg-amber-200 text-amber-400",
+      primary:
+        "bg-amber-500 hover:bg-amber-600 text-white dark:bg-amber-600 dark:hover:bg-amber-700 dark:text-amber-50 focus-visible:ring-amber-500/50",
       secondary:
-        "bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-400",
+        "bg-transparent border border-gray-300 dark:border-neutral-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100/50 dark:hover:bg-white/5 focus-visible:ring-gray-400/50",
       outline:
-        "border-2 border-gray-300 bg-transparent text-gray-900 hover:bg-gray-50 focus:ring-gray-400",
+        "border border-gray-300/30 dark:border-neutral-600/30 bg-transparent text-gray-900 dark:text-gray-100 hover:bg-gray-100/50 dark:hover:bg-white/5 focus-visible:ring-gray-400/50",
       ghost:
-        "bg-transparent text-gray-700 dark:text-gray-300 hover:bg-amber-600/10 dark:hover:bg-amber-600/10 focus:ring-gray-400",
+        "bg-transparent text-gray-700 dark:text-white hover:bg-gray-100/50 dark:hover:bg-white/5 focus-visible:ring-gray-400/50",
+      foreground:
+        "bg-white dark:bg-[oklch(0.228_0.013_286.375)] text-gray-900 dark:text-white  border-gray-200 dark:border-neutral-600 hover:bg-gray-50 dark:hover:bg-[oklch(0.26_0.013_286.375)] focus-visible:ring-gray-400/50",
     };
 
     return (

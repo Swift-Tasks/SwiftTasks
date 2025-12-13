@@ -1,6 +1,6 @@
 "use client";
 
-import { useTheme } from "@/components/theme-provider";
+import { useSettings } from "@/components/settings-provider";
 import { Moon, Sun } from "lucide-react";
 import {
   Tooltip,
@@ -9,14 +9,24 @@ import {
 } from "@/components/ui/tooltip";
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { settings, updateSettings, currentTheme } = useSettings();
 
   const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
+    // If auto theme is enabled, disable it and set to opposite of current
+    if (settings.autoThemeEnabled) {
+      updateSettings({
+        autoThemeEnabled: false,
+        themeMode: currentTheme === "light" ? "dark" : "light",
+      });
+    } else {
+      updateSettings({
+        themeMode: currentTheme === "light" ? "dark" : "light",
+      });
+    }
   };
 
   const getIcon = () => {
-    return theme === "light" ? (
+    return currentTheme === "light" ? (
       <Sun className="w-4 h-4" />
     ) : (
       <Moon className="w-4 h-4" />
@@ -24,7 +34,7 @@ export function ThemeToggle() {
   };
 
   const getLabel = () => {
-    return theme === "light" ? "Light Mode" : "Dark Mode";
+    return currentTheme === "light" ? "Light Mode" : "Dark Mode";
   };
 
   return (
@@ -32,7 +42,7 @@ export function ThemeToggle() {
       <TooltipTrigger asChild>
         <button
           onClick={toggleTheme}
-          className="p-2 rounded-md hover:bg-foreground/10 transition-colors"
+          className="p-2 rounded-md hover:opacity-70 transition-opacity"
           aria-label="Toggle theme"
         >
           {getIcon()}

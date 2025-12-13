@@ -3,7 +3,6 @@
 import { useState, useRef, useCallback, memo, useEffect } from "react";
 import { Sparkles, Send, X } from "lucide-react";
 import { toast } from "sonner";
-import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { GlowingEffect } from "./ui/glowing-effect";
 
 interface AIButtonProps {
   content: string;
@@ -360,31 +360,24 @@ NOW PROCESS THE CONTENT BELOW. OUTPUT ONLY RAW MARKDOWN:`;
     }
 
     return (
-      <div className={cn("relative inline-block", className)}>
+      <div className={cn("relative", className)}>
         <Popover open={isOpen} onOpenChange={setIsOpen}>
           <PopoverTrigger asChild>
             <div>
               <GlowingEffect
                 spread={40}
-                borderWidth={2}
                 glow={true}
                 disabled={false}
                 className="rounded-md"
                 proximity={64}
                 inactiveZone={0.01}
               />
-              <button
+              <Button
+                variant="foreground"
+                loading={isProcessing}
                 disabled={isDisabled || isProcessing}
                 className={cn(
-                  "relative flex items-center gap-1.5 px-2.5 py-1.5 rounded-md",
-                  "bg-white dark:bg-white text-gray-900",
-                  "font-medium text-xs",
-                  "transition-all duration-200",
-                  "hover:bg-gray-50 dark:hover:bg-gray-100",
-                  "disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-100 dark:disabled:bg-gray-200",
-                  "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400",
-                  "shadow-sm hover:shadow-md cursor-pointer",
-                  isProcessing && "animate-pulse",
+                  "gap-1.5 px-2.5 py-1.5 text-xs",
                   !isConfigured && "grayscale"
                 )}
                 aria-label={
@@ -400,9 +393,7 @@ NOW PROCESS THE CONTENT BELOW. OUTPUT ONLY RAW MARKDOWN:`;
                     : undefined
                 }
               >
-                <Sparkles
-                  className={cn("w-3.5 h-3.5", isProcessing && "animate-spin")}
-                />
+                {!isProcessing && <Sparkles className="w-3.5 h-3.5" />}
                 <span>
                   {isConfigured === null
                     ? "Loading..."
@@ -414,12 +405,12 @@ NOW PROCESS THE CONTENT BELOW. OUTPUT ONLY RAW MARKDOWN:`;
                     ? "AI Improve Selection"
                     : "AI Suggestions"}
                 </span>
-              </button>
+              </Button>
             </div>
           </PopoverTrigger>
 
           <PopoverContent
-            className="w-80 p-0 bg-white dark:bg-[var(--dark-bg)] border border-gray-200 dark:border-neutral-700 shadow-lg z-50"
+            className="w-80 p-0 bg-card dark:bg-card border border-gray-200 dark:border-neutral-700 shadow-lg z-50"
             align="end"
           >
             <div className="flex flex-col">
@@ -504,7 +495,7 @@ NOW PROCESS THE CONTENT BELOW. OUTPUT ONLY RAW MARKDOWN:`;
                     }
                   }}
                   placeholder="Custom instructions (optional)..."
-                  className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-[var(--dark-bg)] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
+                  className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-input dark:bg-input text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
                   rows={3}
                   disabled={isProcessing || usage?.remaining === 0}
                 />
