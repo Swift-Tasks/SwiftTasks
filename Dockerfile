@@ -9,8 +9,6 @@ RUN apt-get update && \
 # Set Python environment variables for node-gyp
 ENV PYTHON=/usr/bin/python3
 ENV npm_config_python=/usr/bin/python3
-
-# Patch for oniguruma/node-gyp build error
 ENV npm_config_enable_lto=""
 
 # Install dependencies only when needed
@@ -23,7 +21,8 @@ COPY . .
 # Build the Next.js app
 RUN bun run build
 
-FROM oven/bun:1.1.13 AS runner
+# Use Node.js for runtime (more stable for Next.js production)
+FROM node:20-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
@@ -37,8 +36,15 @@ COPY --from=builder /app/tsconfig.json ./
 COPY --from=builder /app/node_modules ./node_modules
 
 # Use non-root user for security
-RUN adduser --disabled-password --gecos '' appuser && chown -R appuser /app
-USER appuser
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nextjs -u 1001 && \
+    chown -R nextjs:nodejs /app
+
+USER nextjs
 
 EXPOSE 3000
-CMD ["bun", "run", "start"]
+
+ENV PORT 3000
+ENV HOSTNAME "0.0.0.0"
+
+CMD ["node_modules/.bin/next", "start"]
