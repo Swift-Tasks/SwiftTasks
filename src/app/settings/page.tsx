@@ -43,7 +43,7 @@ import {
   getAllCourses,
   getEnabledCourses,
   setEnabledCourses,
-} from "@/app/dashboard-will-v/actions";
+} from "@/app/dashboard/actions";
 
 interface CanvasSettings {
   configured: boolean;
