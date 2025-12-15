@@ -85,13 +85,13 @@ export default function SignUpPage() {
           </p>
         </div>
 
-        <div className="mt-auto mb-8 rounded-md bg-foreground/60 p-8 space-y-6">
+        <div className="mt-auto mb-8 rounded-md bg-foreground/60 text-black dark:bg-amber-800/20  p-8 space-y-6">
           <div>
             <div className="mb-2 text-yellow-600">⭐⭐⭐⭐⭐</div>
-            <p className="mb-2 text-sm font-semibold text-gray-800">
+            <p className="mb-2 text-sm font-semibold text-gray-800 dark:text-white">
               &quot;Game-changer for deadlines!&quot;
             </p>
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-gray-700 dark:text-white">
               I used to forget quiz dates all the time, but this app keeps
               everything organised. The reminders are perfectly timed, and the
               timetable view makes planning my week so much easier. Highly
@@ -101,10 +101,10 @@ export default function SignUpPage() {
 
           <div>
             <div className="mb-2 text-yellow-600">⭐⭐⭐⭐</div>
-            <p className="mb-2 text-sm font-semibold text-gray-800">
+            <p className="mb-2 text-sm font-semibold text-gray-800 dark:text-white">
               &quot;Super helpful but could use a dark mode.&quot;
             </p>
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-gray-700 dark:text-white">
               Honestly, I rely on this app every day now. My classes are all
               laid out clearly, and adding tasks is quick. I&apos;d give it 5
               stars if it had a dark mode, but still an amazing tool for college
@@ -114,10 +114,10 @@ export default function SignUpPage() {
 
           <div>
             <div className="mb-2 text-yellow-600">⭐⭐⭐⭐⭐</div>
-            <p className="mb-2 text-sm font-semibold text-gray-800">
+            <p className="mb-2 text-sm font-semibold text-gray-800 dark:text-white">
               &quot;Made my semester so much smoother.&quot;
             </p>
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-gray-700 dark:text-white">
               I love how it syncs my tasks and lets me sort by due date. The
               clean design makes it easy to stay on track, even during hectic
               weeks. Definitely one of the best productivity apps for students.
@@ -126,13 +126,13 @@ export default function SignUpPage() {
         </div>
       </div>
 
-      <div className="flex w-full items-center justify-center bg-gray-50 p-8 lg:w-1/2">
+      <div className="flex w-full items-center justify-center bg-card dark:bg-card p-8 lg:w-1/2">
         <div className="w-full max-w-md">
           <div className="mb-8">
-            <h2 className="mb-2 text-3xl font-bold text-gray-900">
+            <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
               Welcome To SwiftTasks
             </h2>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
               Get started with SwiftTasks and experience a smarter, faster way
               to stay organised. Creating your account takes just moments, so
               you can jump straight into accomplishing more.
@@ -143,7 +143,7 @@ export default function SignUpPage() {
             <div>
               <label
                 htmlFor="name"
-                className="mb-2 block text-sm font-medium text-gray-700"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 Name
               </label>
@@ -166,7 +166,7 @@ export default function SignUpPage() {
             <div>
               <label
                 htmlFor="email"
-                className="mb-2 block text-sm font-medium text-gray-700"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 Email
               </label>
@@ -189,7 +189,7 @@ export default function SignUpPage() {
             <div>
               <label
                 htmlFor="password"
-                className="mb-2 block text-sm font-medium text-gray-700"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 Password
               </label>
@@ -225,22 +225,24 @@ export default function SignUpPage() {
             </Button>
           </form>
 
-          <p className="mt-4 text-center text-xs text-gray-600">
+          <p className="mt-4 text-center text-xs text-gray-600 dark:text-gray-400">
             By signing up you agree to a{" "}
-            <a href="#" className="text-amber-500 hover:text-amber-600">
+            <a href="/privacy-policy" className="text-amber-500 hover:text-amber-600">
               privacy policy
             </a>{" "}
             and{" "}
-            <a href="#" className="text-amber-500 hover:text-amber-600">
+            <a href="/temrs-of-service" className="text-amber-500 hover:text-amber-600">
               terms of service
             </a>
             .
           </p>
 
           <div className="my-6 flex items-center">
-            <div className="flex-1 border-t border-gray-300"></div>
-            <span className="px-4 text-sm text-gray-500">OR</span>
-            <div className="flex-1 border-t border-gray-300"></div>
+            <div className="flex-1 border-t border-gray-300 dark:border-gray-600"></div>
+            <span className="px-4 text-sm text-gray-500 dark:text-gray-400">
+              OR
+            </span>
+            <div className="flex-1 border-t border-gray-300 dark:border-gray-600"></div>
           </div>
 
           <Button
@@ -262,7 +264,7 @@ export default function SignUpPage() {
           <div className="mt-6 text-center">
             <Link
               href="/signin"
-              className="text-sm text-gray-600 hover:text-gray-900"
+              className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
             >
               Already have an account?{" "}
               <span className="font-semibold text-amber-500 hover:text-amber-600">
@@ -271,7 +273,7 @@ export default function SignUpPage() {
             </Link>
           </div>
 
-          <p className="mt-8 text-center text-xs text-gray-500">
+          <p className="mt-8 text-center text-xs text-gray-500 dark:text-gray-500">
             © SwiftTasks 2025
           </p>
         </div>

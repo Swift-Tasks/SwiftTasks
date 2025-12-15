@@ -1,5 +1,5 @@
 import { relations, sql } from "drizzle-orm";
-import { sqliteTable, text, integer, index  } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer, index } from "drizzle-orm/sqlite-core";
 
 export const user = sqliteTable("user", {
   id: text("id").primaryKey(),
@@ -9,13 +9,46 @@ export const user = sqliteTable("user", {
     .default(false)
     .notNull(),
   image: text("image"),
+  theme: text("theme", { enum: ["light", "dark", "system"] })
+    .default("system")
+    .notNull(),
   createdAt: integer("created_at", { mode: "timestamp_ms" })
     .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
     .notNull(),
   updatedAt: integer("updated_at", { mode: "timestamp_ms" })
     .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-    .$onUpdate(() => /* @__PURE__ */ new Date())
+    .$onUpdate(() => new Date())
     .notNull(),
+  canvasApiUrl: text("canvas_api_url"),
+  canvasApiToken: text("canvas_api_token"),
+  canvasLastSync: integer("canvas_last_sync", { mode: "timestamp_ms" }),
+  enabledCourses: text("enabled_courses"), // JSON array of course IDs
+  // General settings
+  autoCompleteExpired: integer("auto_complete_expired", {
+    mode: "boolean",
+  }).default(false),
+  autoCompleteAllTasks: integer("auto_complete_all_tasks", {
+    mode: "boolean",
+  }).default(false),
+  showCompletedAssignments: integer("show_completed_assignments", {
+    mode: "boolean",
+  }).default(true),
+  // Accessibility settings
+  fontFamily: text("font_family", {
+    enum: ["default", "dyslexic", "mono"],
+  }).default("default"),
+  fontSize: text("font_size", { enum: ["normal", "large", "larger"] }).default(
+    "normal"
+  ),
+  reducedMotion: integer("reduced_motion", { mode: "boolean" }).default(false),
+  highContrast: integer("high_contrast", { mode: "boolean" }).default(false),
+  // Theme settings
+  themeMode: text("theme_mode", { enum: ["light", "dark"] }).default("light"),
+  autoThemeEnabled: integer("auto_theme_enabled", { mode: "boolean" }).default(
+    true
+  ),
+  lightModeStart: text("light_mode_start").default("07:00"), // 7am
+  lightModeEnd: text("light_mode_end").default("20:00"), // 8pm
 });
 
 export const session = sqliteTable(
@@ -28,7 +61,7 @@ export const session = sqliteTable(
       .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
       .notNull(),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .$onUpdate(() => new Date())
       .notNull(),
     ipAddress: text("ip_address"),
     userAgent: text("user_agent"),
@@ -63,7 +96,7 @@ export const account = sqliteTable(
       .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
       .notNull(),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .$onUpdate(() => new Date())
       .notNull(),
   },
   (table) => [index("account_userId_idx").on(table.userId)]
@@ -81,7 +114,7 @@ export const verification = sqliteTable(
       .notNull(),
     updatedAt: integer("updated_at", { mode: "timestamp_ms" })
       .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .$onUpdate(() => new Date())
       .notNull(),
   },
   (table) => [index("verification_identifier_idx").on(table.identifier)]
@@ -106,55 +139,50 @@ export const accountRelations = relations(account, ({ one }) => ({
   }),
 }));
 
-export const assignment = sqliteTable(
-  "assignment",
-  {
-    id: text("id").primaryKey(),
-    name: text("name").notNull(),
-    taskIds: text("task_ids").notNull(),
-    userId: text("user_id")
-      .notNull()
-      .references(() => user.id, { onDelete: "cascade" }),
-    deadline: integer("created_at", { mode: "timestamp_ms" })
-      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .notNull(),
+export const assignment = sqliteTable("assignment", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  taskIds: text("task_ids").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  canvasAssignmentId: text("canvas_assignment_id"),
+  canvasCourseId: text("canvas_course_id"),
+  deadline: integer("created_at", { mode: "timestamp_ms" })
+    .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+    .notNull(),
 
-    createdAt: integer("created_at", { mode: "timestamp_ms" })
-      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .notNull(),
-    updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .$onUpdate(() => /* @__PURE__ */ new Date())
-      .notNull(),
-  }
-);
+  createdAt: integer("created_at", { mode: "timestamp_ms" })
+    .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+    .notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp_ms" })
+    .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+    .$onUpdate(() => new Date())
+    .notNull(),
+});
 
+export const task = sqliteTable("task", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  body: text("body").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  bookmarked: integer("bookmarked").default(0).notNull(),
+  assignmentId: text("assignment_id").references(() => assignment.id, {
+    onDelete: "cascade",
+  }),
+  finished: integer("finished").default(0).notNull(),
 
-export const task = sqliteTable(
-  "task",
-  {
-    id: text("id").primaryKey(),
-    name: text("name").notNull(),
-    description: text("description").notNull(),
-    body: text("body").notNull(),
-    userId: text("user_id")
-      .notNull()
-      .references(() => user.id, { onDelete: "cascade" }),
-    bookmarked: integer("bookmarked").default(0).notNull(),
-    assignmentId: text("assignment_id").references(() => assignment.id, {
-      onDelete: "cascade",
-    }),
-    finished: integer("finished").default(0).notNull(),
-
-    deadline: integer("created_at", { mode: "timestamp_ms" })
-      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .notNull(),
-    createdAt: integer("created_at", { mode: "timestamp_ms" })
-      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .notNull(),
-    updatedAt: integer("updated_at", { mode: "timestamp_ms" })
-      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .$onUpdate(() => /* @__PURE__ */ new Date())
-      .notNull(),
-  }
-);
+  deadline: integer("created_at", { mode: "timestamp_ms" })
+    .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+    .notNull(),
+  createdAt: integer("created_at", { mode: "timestamp_ms" })
+    .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+    .notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp_ms" })
+    .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+    .$onUpdate(() => new Date())
+    .notNull(),
+});

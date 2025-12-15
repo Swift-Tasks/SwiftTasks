@@ -106,13 +106,13 @@ export default function SignInPage() {
         </div>
       </div>
 
-      <div className="flex w-full items-center justify-center bg-gray-50 p-8 lg:w-1/2">
+      <div className="flex w-full items-center justify-center bg-white dark:bg-card p-8 lg:w-1/2">
         <div className="w-full max-w-md">
           <div className="mb-8">
-            <h2 className="mb-2 text-3xl font-bold text-gray-900">
+            <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
               Welcome To SwiftTasks
             </h2>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
               Get started with SwiftTasks and experience a smarter, faster way
               to stay organised. Creating your account takes just moments, so
               you can jump straight into accomplishing more.
@@ -123,7 +123,7 @@ export default function SignInPage() {
             <div>
               <label
                 htmlFor="email"
-                className="mb-2 block text-sm font-medium text-gray-700"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 Email
               </label>
@@ -146,7 +146,7 @@ export default function SignInPage() {
             <div>
               <label
                 htmlFor="password"
-                className="mb-2 block text-sm font-medium text-gray-700"
+                className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 Password
               </label>
@@ -173,9 +173,11 @@ export default function SignInPage() {
           </form>
 
           <div className="my-6 flex items-center">
-            <div className="flex-1 border-t border-gray-300"></div>
-            <span className="px-4 text-sm text-gray-500">OR</span>
-            <div className="flex-1 border-t border-gray-300"></div>
+            <div className="flex-1 border-t border-gray-300 dark:border-gray-600"></div>
+            <span className="px-4 text-sm text-gray-500 dark:text-gray-400">
+              OR
+            </span>
+            <div className="flex-1 border-t border-gray-300 dark:border-gray-600"></div>
           </div>
 
           <Button
@@ -195,7 +197,7 @@ export default function SignInPage() {
           </Button>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
               Don&apos;t have an account?{" "}
               <a
                 href="/signup"
@@ -206,7 +208,7 @@ export default function SignInPage() {
             </p>
           </div>
 
-          <p className="mt-8 text-center text-xs text-gray-500">
+          <p className="mt-8 text-center text-xs text-gray-500 dark:text-gray-500">
             © SwiftTasks 2025
           </p>
         </div>
