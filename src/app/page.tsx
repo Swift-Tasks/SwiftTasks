@@ -44,20 +44,11 @@ export default function HomePage() {
 
   return (
     <ProtectedRoute>
-      <div className="w-screen flex items-center justify-between gap-4 pt-4 px-4">
-        <img className="w-[150px]" src="/images/SwifTaskLogo.png" alt="Logo" />
-        <a href="/dashboard" className="block">
-          <Image
-            className="w-12 h-12 hover:scale-120 hover:brightness-120 transition-all duration-200 cursor-pointer"
-            src="/images/user_profile_icon-removebg-bgremove.png"
-            alt="profile"
-            width={48}
-            height={48}
-          />
-        </a>
+      <div className="text-center pt-8 pb-6">
+        <h1 className="text-6xl font-bold bg-gradient-to-r from-[#FFB900] to-[#6c6c36] bg-clip-text text-transparent">
+          Hello, User!
+        </h1>
       </div>
-
-      <h1 className="text-6xl">Hello, User!</h1>
 
       <div className="flex justify-center items-center h-[calc(100vh-250px)] gap-8 px-12">
         <div className="max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow min-h-[500px]">
