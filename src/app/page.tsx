@@ -1,9 +1,12 @@
 "use client";
+import { useAuth } from "@/components/auth-provider";
 import { ProtectedRoute } from "@/components/protected-route";
 import Image from "next/image";
 import { useState } from "react";
 
 export default function HomePage() {
+
+  const { user } = useAuth()
   const [tasks, setTasks] = useState([
     { id: 1, name: "Cyber Security", dueDate: "Dec 5th, 2025" },
     { id: 2, name: "Cloud Tech", dueDate: "Dec 5th, 2025" },
@@ -46,7 +49,7 @@ export default function HomePage() {
     <ProtectedRoute>
       <div className="text-center pt-8 pb-6">
         <h1 className="text-6xl font-bold bg-gradient-to-r from-[#FFB900] to-[#6c6c36] bg-clip-text text-transparent">
-          Hello, User!
+          Hello, {user?.name}!
         </h1>
       </div>
 
