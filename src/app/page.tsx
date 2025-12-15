@@ -8,23 +8,51 @@ export default function HomePage() {
 
   const { user } = useAuth()
   const [tasks, setTasks] = useState([
-    { id: 1, name: "Cyber Security", dueDate: "Dec 5th, 2025" },
-    { id: 2, name: "Cloud Tech", dueDate: "Dec 5th, 2025" },
-    { id: 3, name: "Cyber Security", dueDate: "Dec 5th, 2025" },
-    { id: 4, name: "Cloud Tech", dueDate: "Dec 5th, 2025" },
+    { id: 1, name: "Cyber Security", dueDate: new Date(2025, 11, 5) },
+    { id: 2, name: "Cloud Tech", dueDate: new Date(2025, 11, 5) },
+    { id: 3, name: "Cyber Security", dueDate: new Date(2025, 11, 5) },
+    { id: 4, name: "Cloud Tech", dueDate: new Date(2025, 11, 5) },
   ]);
 
   const [showForm, setShowForm] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [newTaskName, setNewTaskName] = useState("");
   const [newTaskDate, setNewTaskDate] = useState("");
+  const [currentStartDate, setCurrentStartDate] = useState(new Date());
+
+  const generateTwoWeeks = (startDate) => {
+    const dates = [];
+    for (let i = 0; i < 14; i++) {
+      const date = new Date(startDate);
+      date.setDate(startDate.getDate() + i);
+      dates.push(date);
+    }
+    return dates;
+  };
+  const goToPreviousWeeks = () => {
+    const newDate = new Date(currentStartDate);
+    newDate.setDate(newDate.getDate() - 14);
+    setCurrentStartDate(newDate);
+  };
+  
+  const goToNextWeeks = () => {
+    const newDate = new Date(currentStartDate);
+    newDate.setDate(newDate.getDate() + 14);
+    setCurrentStartDate(newDate);
+  };
+  const getTasksForDate = (date) => {
+    return  tasks.filter(task =>
+   task.dueDate.toDateString() === date.toDateString()
+    );
+  };
+
 
   const addTask = () => {
     if (newTaskName.trim() && newTaskDate.trim()) {
       const newTask = {
         id: tasks.length + 1,
         name: newTaskName,
-        dueDate: newTaskDate,
+        dueDate: new Date(newTaskDate),
       };
       setTasks([...tasks, newTask]);
 
@@ -48,7 +76,7 @@ export default function HomePage() {
   return (
     <ProtectedRoute>
       <div className="text-center pt-8 pb-6">
-        <h1 className="text-6xl font-bold bg-gradient-to-r from-[#FFB900] to-[#6c6c36] bg-clip-text text-transparent">
+        <h1 className="text-6xl font-bold bg-gradient-to-b from-[#FFB900] to-[#6c6c36] bg-clip-text text-transparent">
           Hello, {user?.name}!
         </h1>
       </div>
@@ -85,7 +113,7 @@ export default function HomePage() {
                 className="flex justify-between items-center hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105"
               >
                 <span>{task.name}</span>
-                <span className="text-gray-600">Due: {task.dueDate}</span>
+                <span className="text-gray-600">Due: {task.dueDate.toLocaleDateString()}</span>
               </a>
             ))}
           </div>
@@ -141,7 +169,7 @@ export default function HomePage() {
           )}
         </div>
 
-        <div className="max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow min-h-[400px]">
+        <div className="max-w-3xl flex-1 p-6 bg-white border border-gray-200 rounded-lg shadow min-h-[400px]">
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -163,6 +191,45 @@ export default function HomePage() {
             </svg>
             Your Timetable:
           </h2>
+
+          <div className="flex justify-between items-center mb-4">
+            <button
+              onClick={goToPreviousWeeks}
+              className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg font-medium transition-colors"
+            >
+              ← Previous
+            </button>
+            <span className="font-semibold text-gray-700">
+              {currentStartDate.toLocaleDateString()} - {new Date(currentStartDate.getTime() + 13 * 24 * 60 * 60 * 1000).toLocaleDateString()}
+            </span>
+            <button
+              onClick={goToNextWeeks}
+              className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg font-medium transition-colors"
+            >
+              Next →
+            </button>
+          </div>
+
+          <div className="grid grid-cols-7 gap-2 max-h-[350px] overflow-y-auto">
+            {generateTwoWeeks(currentStartDate).map((date) => (
+              <div key={date.toDateString()} className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                <div className="font-semibold text-gray-800 text-sm">
+                  {date.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
+                </div>
+                <div className="mt-2 space-y-1">
+                  {getTasksForDate(date).length > 0 ? (
+                    getTasksForDate(date).map((task) => (
+                      <div key={task.id} className="text-xs bg-yellow-100 text-gray-800 p-1 rounded border-l-2 border-[#FFB900]">
+                        {task.name}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-xs text-gray-500 italic">No tasks</div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </ProtectedRoute>
