@@ -1,18 +1,21 @@
 FROM oven/bun:1.1.13 AS builder
 WORKDIR /app
 
-# Install Python and build tools BEFORE copying package files
-RUN apt-get update && apt-get install -y python3 make g++ git && \
-    ln -sf python3 /usr/bin/python && \
+# Install Python and build tools with proper configuration
+RUN apt-get update && \
+    apt-get install -y python3 python3-dev make g++ git && \
     rm -rf /var/lib/apt/lists/*
+
+# Set Python environment variables for node-gyp
+ENV PYTHON=/usr/bin/python3
+ENV npm_config_python=/usr/bin/python3
 
 # Patch for oniguruma/node-gyp build error
 ENV npm_config_enable_lto=""
 
 # Install dependencies only when needed
-COPY package.json ./
-# Don't use frozen-lockfile if lockfile has issues
-RUN bun install
+COPY package.json bun.lockb* ./
+RUN bun install --frozen-lockfile
 
 # Copy the rest of the application code
 COPY . .
