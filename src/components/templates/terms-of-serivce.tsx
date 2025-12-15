@@ -16,17 +16,12 @@ function parseMarkdown(text: string): string {
 
 export default function TermsOfService({ content }: { content: string }) {
   return (
-    <div
-      className="min-h-screen py-12 px-6"
-      style={{ backgroundColor: "oklch(0.9244 0.1203 95.85)" }}
-    >
+    <div className="min-h-screen py-12 px-6">
       <main className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
+        <div className="bg-card dark:bg-card rounded-lg border border-gray-200 text-gray-900 dark:text-white dark:border-neutral-700 shadow-sm  p-8 md:p-12">
           <div className="border-b border-gray-200 pb-6 mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-3">
-              Terms of Service
-            </h1>
-            <p className="text-gray-600">
+            <h1 className="text-4xl font-bold  mb-3">Terms of Service</h1>
+            <p className="text-gray-600 dark:text-white/30">
               Last updated:{" "}
               {new Date().toLocaleDateString("en-US", {
                 year: "numeric",
@@ -37,7 +32,7 @@ export default function TermsOfService({ content }: { content: string }) {
           </div>
           <div className="prose prose-gray max-w-none">
             <div
-              className="text-gray-700 leading-relaxed"
+              className=" leading-relaxed"
               dangerouslySetInnerHTML={{
                 __html: `<p class="mb-4">${parseMarkdown(content)}</p>`,
               }}
@@ -46,29 +41,29 @@ export default function TermsOfService({ content }: { content: string }) {
           <div className="mt-12 pt-8 border-t border-gray-200 flex flex-col sm:flex-row gap-4 justify-between items-center">
             <button
               onClick={() => window.print()}
-              className="px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors font-medium"
+              className="bg-amber-500 hover:bg-amber-600 text-white dark:bg-amber-600 dark:hover:bg-amber-700 dark:text-amber-50 focus-visible:ring-amber-500/50 inline-flex items-center cursor-pointer justify-center rounded-lg px-6 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Print Terms
             </button>
             <button
               onClick={() => window.history.back()}
-              className="px-6 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-lg transition-colors font-medium"
+              className="bg-amber-500 hover:bg-amber-600 text-white dark:bg-amber-600 dark:hover:bg-amber-700 dark:text-amber-50 focus-visible:ring-amber-500/50 inline-flex items-center cursor-pointer justify-center rounded-lg px-6 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Back to App
             </button>
           </div>
         </div>
-        <div className="mt-8 bg-white rounded-xl shadow-md p-6 border border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">
+        <div className="mt-8 bg-card dark:bg-card rounded-lg border border-gray-200 dark:border-neutral-700 shadow-sm  p-6 text-gray-600  dark:text-white">
+          <h2 className="text-lg font-semibold  mb-2">
             Questions about our terms of service?
           </h2>
-          <p className="text-gray-600 mb-4">
+          <p className=" mb-4">
             If you have any questions or concerns, please don't hesitate to
             contact us.
           </p>
           <a
             href="mailto:legal@swifttasks.com"
-            className="text-yellow-600 hover:text-yellow-700 font-medium inline-flex items-center"
+            className="text-yellow-600 hover:text-yellow-700 cursor-pointer font-medium inline-flex items-center"
           >
             legal@swifttasks.com
             <svg
