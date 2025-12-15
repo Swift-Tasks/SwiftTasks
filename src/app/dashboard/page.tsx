@@ -24,6 +24,8 @@ export default function Home() {
   const [newTaskText, setNewTaskText] = useState("");
   const [newTaskDate, setNewTaskDate] = useState("");
   const [newTaskColor, setNewTaskColor] = useState("cyan");
+  const [deleteMode, setDeleteMode] = useState(false);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
   const toggleTask = (idx: number) => {
     setTasks(prev =>
@@ -31,6 +33,36 @@ export default function Home() {
         i === idx ? { ...task, completed: !task.completed } : task
       )
     );
+  };
+
+  const deleteTask = (idx: number) => {
+    setTasks(prev => prev.filter((_, i) => i !== idx));
+  };
+
+  const startEditTask = (idx: number) => {
+    setEditingIndex(idx);
+    setNewTaskText(tasks[idx].text);
+    setNewTaskDate(tasks[idx].date);
+    setNewTaskColor(tasks[idx].color);
+    setShowForm(true);
+  };
+
+  const saveEdit = () => {
+    if (editingIndex !== null && newTaskText.trim() && newTaskDate) {
+      setTasks(prev =>
+        prev.map((task, i) =>
+          i === editingIndex
+            ? { ...task, text: newTaskText, date: newTaskDate, color: newTaskColor }
+            : task
+        )
+      );
+      
+      setNewTaskText("");
+      setNewTaskDate("");
+      setNewTaskColor("cyan");
+      setShowForm(false);
+      setEditingIndex(null);
+    }
   };
 
   const addTask = () => {
@@ -43,12 +75,19 @@ export default function Home() {
       };
       setTasks(prev => [...prev, newTask]);
       
-      // Reset form
       setNewTaskText("");
       setNewTaskDate("");
       setNewTaskColor("cyan");
       setShowForm(false);
     }
+  };
+
+  const cancelEdit = () => {
+    setNewTaskText("");
+    setNewTaskDate("");
+    setNewTaskColor("cyan");
+    setShowForm(false);
+    setEditingIndex(null);
   };
 
   const dateColorMap: Record<string, string> = {
@@ -65,29 +104,40 @@ export default function Home() {
         {/* HEADER */}
         <div className="flex justify-between items-start mb-8">
           <div>
-            <h1 contentEditable className="w-full"> Cyber Security </h1>
+            <h1 className="text-3xl font-bold mb-2">Cyber Security</h1>
             <div className="flex gap-5 text-gray-600 text-sm">
-              <input type="date" value="2025-01-01" onChange={() => {}}/>
+              <input type="date" value="2025-01-01" onChange={() => {}} className="border rounded px-2 py-1"/>
               <span>🔗 Exam Unit</span>
             </div>
           </div>
           <div className="flex gap-2">
             <button 
-              onClick={() => setShowForm(true)}
+              onClick={() => {
+                setShowForm(true);
+                setEditingIndex(null);
+                setNewTaskText("");
+                setNewTaskDate("");
+                setNewTaskColor("cyan");
+              }}
               className="p-2 rounded-lg hover:bg-amber-600/20 text-xl"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             </button>
-            <button className="p-2 rounded-lg hover:bg-gray-100 text-xl">
+            <button 
+              onClick={() => setDeleteMode(!deleteMode)}
+              className={`p-2 rounded-lg text-xl transition ${deleteMode ? 'bg-red-100 hover:bg-red-200' : 'hover:bg-gray-100'}`}
+            >
               ⚙️
             </button>
           </div>
         </div>
 
-        {/* ADD TASK FORM */}
+        {/* ADD/EDIT TASK FORM */}
         {showForm && (
           <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-            <h3 className="text-lg font-semibold mb-3">Add New Task</h3>
+            <h3 className="text-lg font-semibold mb-3">
+              {editingIndex !== null ? 'Edit Task' : 'Add New Task'}
+            </h3>
             <div className="space-y-3">
               <input
                 type="text"
@@ -97,8 +147,7 @@ export default function Home() {
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
               />
               <input
-                type="text"
-                placeholder="Date (e.g., Dec, 15th 14:00)"
+                type="date"
                 value={newTaskDate}
                 onChange={(e) => setNewTaskDate(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
@@ -114,13 +163,13 @@ export default function Home() {
               </select>
               <div className="flex gap-2">
                 <button
-                  onClick={addTask}
+                  onClick={editingIndex !== null ? saveEdit : addTask}
                   className="flex-1 bg-orange-400 text-white px-4 py-2 rounded-lg hover:bg-orange-500 transition"
                 >
-                  Add Task
+                  {editingIndex !== null ? 'Save Changes' : 'Add Task'}
                 </button>
                 <button
-                  onClick={() => setShowForm(false)}
+                  onClick={cancelEdit}
                   className="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition"
                 >
                   Cancel
@@ -153,9 +202,26 @@ export default function Home() {
                 </span>
               </div>
 
-              <span className={`text-sm font-medium ${dateColorMap[task.color]}`}>
-                {task.date}
-              </span>
+              {deleteMode ? (
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => startEditTask(i)}
+                    className="text-blue-500 hover:text-blue-700 font-bold px-3 py-1 rounded hover:bg-blue-50 transition"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => deleteTask(i)}
+                    className="text-red-500 hover:text-red-700 font-bold px-3 py-1 rounded hover:bg-red-50 transition"
+                  >
+                    Delete
+                  </button>
+                </div>
+              ) : (
+                <span className={`text-sm font-medium ${dateColorMap[task.color]}`}>
+                  {task.date}
+                </span>
+              )}
             </li>
           ))}
         </ul>
