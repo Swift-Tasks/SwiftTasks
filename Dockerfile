@@ -2,7 +2,7 @@ FROM oven/bun:1.1.13 AS builder
 WORKDIR /app
 
 # Install Python and build tools BEFORE copying package files
-RUN apt-get update && apt-get install -y python3 make g++ && \
+RUN apt-get update && apt-get install -y python3 make g++ git && \
     ln -sf python3 /usr/bin/python && \
     rm -rf /var/lib/apt/lists/*
 
@@ -10,8 +10,9 @@ RUN apt-get update && apt-get install -y python3 make g++ && \
 ENV npm_config_enable_lto=""
 
 # Install dependencies only when needed
-COPY package.json bun.lockb* ./
-RUN bun install --frozen-lockfile
+COPY package.json ./
+# Don't use frozen-lockfile if lockfile has issues
+RUN bun install
 
 # Copy the rest of the application code
 COPY . .
@@ -28,7 +29,6 @@ ENV NODE_ENV=production
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/bun.lockb* ./
 COPY --from=builder /app/next.config.* ./
 COPY --from=builder /app/tsconfig.json ./
 COPY --from=builder /app/node_modules ./node_modules
