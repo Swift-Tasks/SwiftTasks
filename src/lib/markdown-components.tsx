@@ -145,7 +145,6 @@ export const createMarkdownComponents = (isDark: boolean): Components => ({
     }
     return <span {...props}>{children}</span>;
   },
-  comment: () => null,
   text: ({ value }: any) => {
     if (typeof value === "string" && value.trim().startsWith("<!--")) {
       return null;
