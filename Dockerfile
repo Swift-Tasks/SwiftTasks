@@ -31,9 +31,6 @@ ENV NODE_ENV=production
 # Build Next.js
 RUN npx next build
 
-RUN npx drizzle-kit generate
-RUN npx drizzle-kit migrate
-RUN npx drizzle-kit push
 
 # ----------------------------
 # Runtime stage
@@ -49,6 +46,10 @@ ENV HOSTNAME=0.0.0.0
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
+
+RUN npx drizzle-kit generate
+RUN npx drizzle-kit migrate
+RUN npx drizzle-kit push
 
 EXPOSE 3000
 
