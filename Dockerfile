@@ -24,11 +24,9 @@ COPY . .
 ENV NODE_ENV=production
 RUN npx next build
 
-
 # ----------------------------
 # Runtime stage
 # ----------------------------
-# Runtime stage
 FROM node:20-bullseye-slim AS runner
 WORKDIR /app
 
@@ -41,11 +39,11 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 
-# Copy drizzle + migrations + entrypoint
-COPY --from=builder /app/drizzle.config.* ./
-COPY --from=builder /app/migrations ./migrations
+# Copy drizzle config + migrations + entrypoint
+COPY --from=builder /app/drizzle.config.* ./ 
+COPY --from=builder /app/drizzle/migrations ./migrations 
 COPY --from=builder /app/docker-entrypoint.sh ./
-RUN chmod +x docker-entrypoint.sh   # <--- ensure executable
+RUN chmod +x docker-entrypoint.sh  
 
 EXPOSE 3000
 CMD ["./docker-entrypoint.sh"]
