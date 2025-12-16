@@ -28,6 +28,7 @@ RUN npx next build
 # ----------------------------
 # Runtime stage
 # ----------------------------
+# Runtime stage
 FROM node:20-bullseye-slim AS runner
 WORKDIR /app
 
@@ -35,15 +36,16 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
-# Copy Next standalone output
+# Copy standalone output
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 
-# Copy Drizzle + migrations + entrypoint
+# Copy drizzle + migrations + entrypoint
 COPY --from=builder /app/drizzle.config.* ./
 COPY --from=builder /app/migrations ./migrations
 COPY --from=builder /app/docker-entrypoint.sh ./
+RUN chmod +x docker-entrypoint.sh   # <--- ensure executable
 
 EXPOSE 3000
 CMD ["./docker-entrypoint.sh"]
