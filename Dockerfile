@@ -31,6 +31,10 @@ ENV NODE_ENV=production
 # Build Next.js
 RUN npx next build
 
+RUN npx drizzle-kit generate
+RUN npx drizzle-kit migrate
+RUN npx drizzle-kit push
+
 # ----------------------------
 # Runtime stage
 # ----------------------------
