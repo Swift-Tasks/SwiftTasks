@@ -7,8 +7,9 @@ services:
       - "3000:3000"
     env_file:
       - .env
-    environment:
-      - NODE_ENV=production
-      - PORT=3000
-      - HOSTNAME=0.0.0.0
+    volumes:
+      - sqlite-data:/app/data
     restart: unless-stopped
+
+volumes:
+  sqlite-data:
