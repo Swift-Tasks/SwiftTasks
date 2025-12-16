@@ -20,7 +20,7 @@ export default function HomePage() {
   const [newTaskDate, setNewTaskDate] = useState("");
   const [currentStartDate, setCurrentStartDate] = useState(new Date());
 
-  const generateTwoWeeks = (startDate) => {
+  const generateTwoWeeks = (startDate: Date) => {
     const dates = [];
     for (let i = 0; i < 14; i++) {
       const date = new Date(startDate);
@@ -40,7 +40,7 @@ export default function HomePage() {
     newDate.setDate(newDate.getDate() + 14);
     setCurrentStartDate(newDate);
   };
-  const getTasksForDate = (date) => {
+  const getTasksForDate = (date: Date) => {
     return  tasks.filter(task =>
    task.dueDate.toDateString() === date.toDateString()
     );
