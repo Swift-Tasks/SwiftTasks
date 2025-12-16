@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "db": "bunx drizzle-kit generate && bunx drizzle-kit migrate",
     "lint": "eslint",
     "seed": "bun run scripts/seed.ts"
   },
