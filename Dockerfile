@@ -12,14 +12,16 @@ RUN apt-get update && \
     apt-get install -y python3 make g++ git && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy manifests first for caching
+# Copy manifests first
 COPY package.json package-lock.json* ./
 
-# Install deps (ignore peer conflicts deterministically)
-RUN npm ci \
-  --no-audit \
-  --prefer-offline \
-  --legacy-peer-deps
+# Install deps (works with or without lockfile)
+RUN sh -c '\
+  if [ -f package-lock.json ]; then \
+    npm ci --no-audit --prefer-offline --legacy-peer-deps; \
+  else \
+    npm install --no-audit --prefer-offline --legacy-peer-deps; \
+  fi'
 
 # Copy source
 COPY . .
