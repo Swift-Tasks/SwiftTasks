@@ -8,7 +8,7 @@ services:
     env_file:
       - .env
     volumes:
-      - sqlite-data:/app/data
+      - ./sqlite.db:/app/data/sqlite.db
     restart: unless-stopped
 
 volumes:
