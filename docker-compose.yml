@@ -8,5 +8,5 @@ services:
     env_file:
       - .env
     volumes:
-      - ./sqlite.db:/app/data/sqlite.db
+      - /root/SwiftTasks/sqlite.db:/app/data/sqlite.db
     restart: unless-stopped
