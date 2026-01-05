@@ -82,7 +82,7 @@ export default function HomePage() {
       </div>
 
       <div className="flex justify-center items-center h-[calc(100vh-250px)] gap-8 px-12">
-        <div className="max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow min-h-[500px]">
+        <div className="w-80 p-6 bg-card border border-gray-200 rounded-lg shadow h-[550px] flex flex-col overflow-hidden">
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -105,15 +105,15 @@ export default function HomePage() {
             Assignments Due:
           </h2>
 
-          <div className="space-y-3">
+          <div className="space-y-3 flex-1 overflow-y-auto">
             {tasks.map((task) => (
               <a
                 key={task.id}
                 href="/dashboard"
-                className="flex justify-between items-center hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105"
+                className="grid grid-cols-[1fr_auto] gap-4 items-center hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105"
               >
                 <span>{task.name}</span>
-                <span className="text-gray-600">Due: {task.dueDate.toLocaleDateString()}</span>
+                <span className="text-gray-600 dark:text-[#f2f0efdd]">Due: {task.dueDate.toLocaleDateString()}</span>
               </a>
             ))}
           </div>
@@ -134,7 +134,7 @@ export default function HomePage() {
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
               />
               <input
-                type="text"
+                type="date"
                 placeholder="Due date (e.g., Dec 15th, 2025)"
                 value={newTaskDate}
                 onChange={(e) => setNewTaskDate(e.target.value)}
@@ -169,7 +169,7 @@ export default function HomePage() {
           )}
         </div>
 
-        <div className="max-w-3xl flex-1 p-6 bg-white border border-gray-200 rounded-lg shadow min-h-[400px]">
+        <div className="max-w-3xl flex-1 p-6 bg-card border border-gray-200 rounded-lg shadow min-h-[400px]">
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +200,7 @@ export default function HomePage() {
             >
               ← Previous
             </button>
-            <span className="font-semibold text-gray-700">
+            <span className="font-semibold text-gray-700 dark:text-[#f2f0efdd]">
               {currentStartDate.toLocaleDateString()} - {new Date(currentStartDate.getTime() + 13 * 24 * 60 * 60 * 1000).toLocaleDateString()}
             </span>
             <button
@@ -214,8 +214,8 @@ export default function HomePage() {
 
           <div className="grid grid-cols-7 gap-2 max-h-[350px] overflow-y-auto">
             {generateTwoWeeks(currentStartDate).map((date) => (
-              <div key={date.toDateString()} className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                <div className="font-semibold text-gray-800 text-sm">
+              <div key={date.toDateString()} className="p-3 dark:bg-gray-800/50 rounded-lg border border-gray-200">
+                <div className="font-semibold text-gray-800 dark:text-[#f2f0efdd] text-sm">
                   {date.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
                 </div>
                 <div className="mt-2 space-y-1">
