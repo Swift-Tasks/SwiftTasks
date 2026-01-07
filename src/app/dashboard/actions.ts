@@ -112,7 +112,6 @@ export async function getAssignmentsGroupedByCourse() {
       ? a.name.split(": ")[0]
       : "Uncategorized";
     const courseId = a.canvasCourseId || courseName;
-
     if (!grouped[courseId]) {
       grouped[courseId] = {
         courseId: a.canvasCourseId,
@@ -123,6 +122,7 @@ export async function getAssignmentsGroupedByCourse() {
     grouped[courseId].assignments.push(a);
   }
 
+  console.log(grouped)
   return Object.values(grouped);
 }
 
@@ -139,6 +139,8 @@ export async function getAllCourses() {
     .select()
     .from(assignment)
     .where(eq(assignment.userId, session.user.id));
+
+  console.log(allAssignments);
 
   // Extract unique courses
   const courses: Record<string, { id: string; name: string }> = {};

@@ -96,12 +96,14 @@ export default function DashboardPage() {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const [groupedData, coursesData] = await Promise.all([
-          getAssignmentsGroupedByCourse(),
+        const [coursesData, groupedData] = await Promise.all([
           getAllCourses(),
+          getAssignmentsGroupedByCourse(),
         ]);
         setCourseGroups(groupedData);
         setCourses(coursesData);
+        console.log(coursesData, groupedData);
+        console.log(await getAssignmentsGroupedByCourse());
       } catch (error) {
         console.error("Error fetching data:", error);
         toast.error("Failed to load assignments");

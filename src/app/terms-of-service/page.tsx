@@ -2,7 +2,7 @@ import TermsOfService from "@/components/templates/terms-of-serivce";
 
 const content = `# Terms of Service
 
-**Last Updated: [Insert Date]**
+**Last Updated: 7th Jan 2025**
 
 By accessing or using this website, you agree to comply with and be bound by these Terms of Service. If you do not agree with any part of these terms, you must discontinue use of the site.
 
@@ -55,7 +55,7 @@ We may update these Terms of Service from time to time. Continued use of the web
 
 ## Contact Information  
 If you have questions about these Terms, please contact us at:  
-**[Insert Contact Email or Address]**
+**support@swifttasks.org**
 `;
 
 export default function TermsOfServicePage() {

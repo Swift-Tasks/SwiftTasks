@@ -46,6 +46,22 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 
+# Copy migration files and scripts
+COPY --from=builder /app/drizzle ./drizzle
+COPY --from=builder /app/scripts/migrate.ts ./scripts/migrate.ts
+COPY --from=builder /app/drizzle.config.ts ./drizzle.config.ts
+COPY --from=builder /app/package.json ./package.json
+
+# Copy and enable entrypoint script
+COPY --from=builder /app/docker-entrypoint.sh ./docker-entrypoint.sh
+RUN chmod +x ./docker-entrypoint.sh
+
+# Install tsx for running TypeScript migration script
+RUN npm install --omit=dev tsx
+
+# Create data directory for database file
+RUN mkdir -p /app/data
+
 EXPOSE 3000
 
-CMD ["node", "server.js"]
+CMD ["./docker-entrypoint.sh"]
