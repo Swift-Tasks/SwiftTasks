@@ -21,6 +21,7 @@ interface CanvasCourse {
 }
 
 async function fetchCanvasAssignments(apiUrl: string, apiToken: string) {
+  if(!apiToken) return [];
   const coursesResponse = await fetch(
     `${apiUrl}/api/v1/courses?enrollment_state=active&per_page=100`,
     {
