@@ -32,7 +32,8 @@ async function fetchCanvasAssignments(apiUrl: string, apiToken: string) {
   );
 
   if (!coursesResponse.ok) {
-    throw new Error("Failed to fetch Canvas courses");
+    console.log("Failed to fetch Canvas courses");
+    return;
   }
 
   const courses: CanvasCourse[] = await coursesResponse.json();
@@ -66,7 +67,7 @@ async function syncCanvasAssignments(
 ) {
   try {
     const canvasAssignments = await fetchCanvasAssignments(apiUrl, apiToken);
-
+    if(!canvasAssignments) return;
     const existingAssignments = await db
       .select()
       .from(assignment)
