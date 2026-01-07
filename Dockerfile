@@ -18,13 +18,10 @@ COPY package.json package-lock.json* ./
 # Install deps (works with or without lockfile)
 RUN sh -c '\
   if [ -f package-lock.json ]; then \
-    npm ci --no-audit --legacy-peer-deps; \
+    npm ci --no-audit --legacy-peer-deps --include=optional; \
   else \
-    npm install --no-audit --legacy-peer-deps; \
+    npm install --no-audit --legacy-peer-deps --include=optional; \
   fi'
-
-# Rebuild native modules to ensure platform-specific binaries are correctly installed
-RUN npm rebuild
 
 # Copy source
 COPY . .
