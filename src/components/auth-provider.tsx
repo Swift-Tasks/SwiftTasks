@@ -37,7 +37,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (session?.user?.id && !syncTriggeredRef.current) {
       syncTriggeredRef.current = true;
-      checkAndSyncCanvasOnLogin(session.user.id).catch(console.error);
+      // Canvas sync is optional - silently ignore any errors
+      checkAndSyncCanvasOnLogin(session.user.id).catch(() => {
+        // Silently ignore Canvas sync errors - Canvas is optional
+      });
     }
   }, [session?.user?.id]);
 

@@ -21,27 +21,12 @@ interface CanvasCourse {
 }
 
 async function fetchCanvasAssignments(apiUrl: string, apiToken: string) {
-  if(!apiToken) return [];
-  const coursesResponse = await fetch(
-    `${apiUrl}/api/v1/courses?enrollment_state=active&per_page=100`,
-    {
-      headers: {
-        Authorization: `Bearer ${apiToken}`,
-      },
-    }
-  );
+  // Canvas is optional - return empty if not configured
+  if (!apiUrl || !apiToken) return [];
 
-  if (!coursesResponse.ok) {
-    console.log("Failed to fetch Canvas courses");
-    return;
-  }
-
-  const courses: CanvasCourse[] = await coursesResponse.json();
-  const allAssignments: (CanvasAssignment & { courseName: string })[] = [];
-
-  for (const course of courses) {
-    const assignmentsResponse = await fetch(
-      `${apiUrl}/api/v1/courses/${course.id}/assignments?per_page=100`,
+  try {
+    const coursesResponse = await fetch(
+      `${apiUrl}/api/v1/courses?enrollment_state=active&per_page=100`,
       {
         headers: {
           Authorization: `Bearer ${apiToken}`,
@@ -49,15 +34,39 @@ async function fetchCanvasAssignments(apiUrl: string, apiToken: string) {
       }
     );
 
-    if (assignmentsResponse.ok) {
-      const assignments: CanvasAssignment[] = await assignmentsResponse.json();
-      allAssignments.push(
-        ...assignments.map((a) => ({ ...a, courseName: course.name }))
-      );
+    if (!coursesResponse.ok) {
+      // Canvas sync failed - this is optional, just return empty
+      console.log("Canvas sync skipped: Could not fetch courses");
+      return [];
     }
-  }
 
-  return allAssignments;
+    const courses: CanvasCourse[] = await coursesResponse.json();
+    const allAssignments: (CanvasAssignment & { courseName: string })[] = [];
+
+    for (const course of courses) {
+      const assignmentsResponse = await fetch(
+        `${apiUrl}/api/v1/courses/${course.id}/assignments?per_page=100`,
+        {
+          headers: {
+            Authorization: `Bearer ${apiToken}`,
+          },
+        }
+      );
+
+      if (assignmentsResponse.ok) {
+        const assignments: CanvasAssignment[] = await assignmentsResponse.json();
+        allAssignments.push(
+          ...assignments.map((a) => ({ ...a, courseName: course.name }))
+        );
+      }
+    }
+
+    return allAssignments;
+  } catch (error) {
+    // Canvas is optional - return empty on any error
+    console.log("Canvas sync skipped due to error:", error);
+    return [];
+  }
 }
 
 async function syncCanvasAssignments(

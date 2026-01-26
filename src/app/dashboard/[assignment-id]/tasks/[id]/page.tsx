@@ -194,7 +194,7 @@ export default function DashboardPage() {
             setSavedContent(savedContent);
             setHasUnsavedChanges(true);
             toast.error(
-              "Failed to save changes after multiple attempts. Please try again."
+              "Failed to save changes after multiple attempts. Please try again.",
             );
           }
         } finally {
@@ -204,7 +204,7 @@ export default function DashboardPage() {
 
       await attemptSave();
     },
-    [taskId, content, isSaving, savedContent]
+    [taskId, content, isSaving, savedContent],
   );
 
   const handleRevert = useCallback(() => {
@@ -263,7 +263,7 @@ export default function DashboardPage() {
         editor.focus();
       }
     },
-    []
+    [],
   );
 
   const handleDialogInsert = useCallback(
@@ -321,7 +321,7 @@ export default function DashboardPage() {
       setLinkDialogOpen(false);
       setGifDialogOpen(false);
     },
-    [dialogUrl, dialogDescription, selectedText, content, viewMode]
+    [dialogUrl, dialogDescription, selectedText, content, viewMode],
   );
 
   const handleImportFile = useCallback(() => {
@@ -351,7 +351,7 @@ export default function DashboardPage() {
 
       event.target.value = "";
     },
-    []
+    [],
   );
 
   const handleExportFile = useCallback(() => {
@@ -378,7 +378,7 @@ export default function DashboardPage() {
       toast.success(
         result.finished
           ? "Task marked as completed"
-          : "Task marked as incomplete"
+          : "Task marked as incomplete",
       );
     } catch (error) {
       console.error("Error toggling task completion:", error);
@@ -427,7 +427,7 @@ export default function DashboardPage() {
       setSavedSelection(null);
       setHighlightDialogOpen(false);
     },
-    [savedSelection, viewMode]
+    [savedSelection, viewMode],
   );
 
   const wordCount = useMemo(() => {
@@ -447,7 +447,7 @@ export default function DashboardPage() {
       quickSuggestions: true,
       tabSize: 2,
     }),
-    [fontSize]
+    [fontSize],
   );
 
   return (
@@ -458,7 +458,6 @@ export default function DashboardPage() {
         <div className="min-h-screen">
           <div className="max-w-7xl mx-auto px-4 py-8">
             <div className="flex flex-col gap-3 h-[calc(100vh-8rem)]">
-              {/* Top bar with info and buttons */}
               <div className="flex flex-row justify-between items-center">
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-2 text-sm">
@@ -474,7 +473,7 @@ export default function DashboardPage() {
                       {(taskData?.assignment?.name || "Assignment").length > 43
                         ? (taskData?.assignment?.name || "Assignment").slice(
                             0,
-                            43
+                            43,
                           ) + "…"
                         : taskData?.assignment?.name || "Assignment"}
                     </span>
@@ -537,7 +536,6 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 <div className="flex gap-2">
-                 
                   <AIButton
                     content={content}
                     selectedText={editorSelectedText}
@@ -895,7 +893,7 @@ export default function DashboardPage() {
                         remarkPlugins={[remarkGfm]}
                         rehypePlugins={[rehypeRaw]}
                         components={createMarkdownComponents(
-                          currentTheme === "dark"
+                          currentTheme === "dark",
                         )}
                       >
                         {content}
@@ -937,7 +935,7 @@ export default function DashboardPage() {
                           remarkPlugins={[remarkGfm]}
                           rehypePlugins={[rehypeRaw]}
                           components={createMarkdownComponents(
-                            currentTheme === "dark"
+                            currentTheme === "dark",
                           )}
                         >
                           {content}

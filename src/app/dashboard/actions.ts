@@ -39,7 +39,7 @@ export async function getAssignments() {
     .from(assignment)
     .where(eq(assignment.userId, session.user.id))
     .orderBy(desc(assignment.deadline));
-
+  
   return assignments;
 }
 
@@ -63,24 +63,25 @@ export async function getAssignmentsGroupedByCourse() {
     ? JSON.parse(userData.enabledCourses)
     : [];
 
-  // If no courses are enabled, return empty array (default: no unnecessary data)
-  if (enabledCourses.length === 0) {
-    return [];
-  }
-
   // Get all assignments
-  let assignmentsQuery = db
+  const allAssignments = await db
     .select()
     .from(assignment)
     .where(eq(assignment.userId, session.user.id))
     .orderBy(assignment.deadline);
 
-  const allAssignments = await assignmentsQuery;
-
-  // Filter by enabled courses (include assignments without canvasCourseId as "manual" assignments)
-  const filteredAssignments = allAssignments.filter(
-    (a) => !a.canvasCourseId || enabledCourses.includes(a.canvasCourseId)
-  );
+  // Filter by enabled courses:
+  // - Always show manual assignments (no canvasCourseId)
+  // - If user has enabled courses, filter Canvas assignments by those
+  // - If no courses enabled, show all assignments (Canvas is optional)
+  const filteredAssignments = allAssignments.filter((a) => {
+    // Always show manual assignments (not from Canvas)
+    if (!a.canvasCourseId) return true;
+    // If no courses are enabled, show all Canvas assignments too
+    if (enabledCourses.length === 0) return true;
+    // Otherwise filter by enabled courses
+    return enabledCourses.includes(a.canvasCourseId);
+  });
 
   // Sort assignments: non-expired first (by deadline), then expired at the bottom
   const now = new Date();
@@ -122,7 +123,7 @@ export async function getAssignmentsGroupedByCourse() {
     grouped[courseId].assignments.push(a);
   }
 
-  console.log(grouped)
+  
   return Object.values(grouped);
 }
 
@@ -238,7 +239,7 @@ export async function createAssignment(data: {
   }
 
   const assignmentId = createId();
-  const fullName = `${data.courseName} - ${data.name}`;
+  const fullName = `${data.courseName}: ${data.name}`;
 
   await db.insert(assignment).values({
     id: assignmentId,

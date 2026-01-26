@@ -65,7 +65,7 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [completedAssignments, setCompletedAssignments] = useState<Set<string>>(
-    new Set()
+    new Set(),
   );
 
   // Filter state
@@ -75,7 +75,7 @@ export default function DashboardPage() {
   >("all");
   const [selectedCourse, setSelectedCourse] = useState<string>("all");
   const [sortBy, setSortBy] = useState<"deadline" | "newest" | "name">(
-    "deadline"
+    "deadline",
   );
 
   // Form state for new assignment
@@ -100,10 +100,11 @@ export default function DashboardPage() {
           getAllCourses(),
           getAssignmentsGroupedByCourse(),
         ]);
+
         setCourseGroups(groupedData);
         setCourses(coursesData);
-        console.log(coursesData, groupedData);
-        console.log(await getAssignmentsGroupedByCourse());
+
+       
       } catch (error) {
         console.error("Error fetching data:", error);
         toast.error("Failed to load assignments");
@@ -273,7 +274,7 @@ export default function DashboardPage() {
     const endOfMonth = new Date(
       today.getFullYear(),
       today.getMonth() + 1,
-      today.getDate()
+      today.getDate(),
     );
 
     return courseGroups
@@ -418,10 +419,11 @@ export default function DashboardPage() {
                         {filter === "all"
                           ? "All"
                           : filter === "week"
-                          ? "This Week"
-                          : filter === "month"
-                          ? "This Month"
-                          : filter.charAt(0).toUpperCase() + filter.slice(1)}
+                            ? "This Week"
+                            : filter === "month"
+                              ? "This Month"
+                              : filter.charAt(0).toUpperCase() +
+                                filter.slice(1)}
                       </button>
                     ))}
                   </div>
@@ -497,7 +499,7 @@ export default function DashboardPage() {
                       <div className="space-y-2">
                         {group.assignments.map((assignment) => {
                           const isCompleted = completedAssignments.has(
-                            assignment.id
+                            assignment.id,
                           );
                           const assignmentName = assignment.name.includes(": ")
                             ? assignment.name.split(": ").slice(1).join(": ")
@@ -534,7 +536,7 @@ export default function DashboardPage() {
                               </button>
                               <span
                                 className={`text-xs font-medium ${getDueDateColor(
-                                  assignment.deadline
+                                  assignment.deadline,
                                 )}`}
                               >
                                 📅 {formatDate(assignment.deadline)}
@@ -667,7 +669,7 @@ export default function DashboardPage() {
                         {getAssignmentsForDate(weekDates[i]).map(
                           (assignment) => {
                             const assignmentName = assignment.name.includes(
-                              ": "
+                              ": ",
                             )
                               ? assignment.name.split(": ").slice(1).join(": ")
                               : assignment.name;
@@ -690,7 +692,7 @@ export default function DashboardPage() {
                                 {assignmentName}
                               </button>
                             );
-                          }
+                          },
                         )}
                       </div>
                     </div>
@@ -718,7 +720,7 @@ export default function DashboardPage() {
                         {getAssignmentsForDate(weekDates[i + 7]).map(
                           (assignment) => {
                             const assignmentName = assignment.name.includes(
-                              ": "
+                              ": ",
                             )
                               ? assignment.name.split(": ").slice(1).join(": ")
                               : assignment.name;
@@ -741,7 +743,7 @@ export default function DashboardPage() {
                                 {assignmentName}
                               </button>
                             );
-                          }
+                          },
                         )}
                       </div>
                     </div>

@@ -390,7 +390,7 @@ export default function DashboardPage() {
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
-                    variant="outline"
+                    variant="foreground"
                     className="gap-1 px-1.5 py-0.5 text-xs h-auto rounded-md"
                   >
                     <Calendar className="w-3 h-3" />
@@ -398,7 +398,10 @@ export default function DashboardPage() {
                     <ChevronDown className="w-3 h-3" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent align="end" className="w-64 border border-white/10">
+                <PopoverContent
+                  align="end"
+                  className="w-64 border border-white/10"
+                >
                   <div className="space-y-2">
                     {(Object.keys(dateFilterLabels) as DateFilter[]).map(
                       (filter) => (
@@ -413,7 +416,7 @@ export default function DashboardPage() {
                         >
                           {dateFilterLabels[filter]}
                         </button>
-                      )
+                      ),
                     )}
 
                     {dateFilter === "custom" && (
@@ -444,7 +447,7 @@ export default function DashboardPage() {
 
               {/* Show/Hide Completed Toggle */}
               <Button
-                variant={showCompleted ? "outline" : "secondary"}
+                variant={"foreground"}
                 onClick={() => setShowCompleted(!showCompleted)}
                 className="gap-1 px-1.5 py-0.5 text-xs h-auto rounded-md"
               >
@@ -588,7 +591,7 @@ export default function DashboardPage() {
                     <button
                       onClick={() =>
                         router.push(
-                          `/dashboard/${assignmentId}/tasks/${task.id}`
+                          `/dashboard/${assignmentId}/tasks/${task.id}`,
                         )
                       }
                       className="flex-1 text-left min-w-0"
@@ -615,7 +618,7 @@ export default function DashboardPage() {
                     {/* Due Date */}
                     <div
                       className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium ${getDueDateColor(
-                        task.deadline
+                        task.deadline,
                       )}`}
                     >
                       <Clock className="w-3.5 h-3.5" />
@@ -626,7 +629,7 @@ export default function DashboardPage() {
                     <button
                       onClick={() =>
                         router.push(
-                          `/dashboard/${assignmentId}/tasks/${task.id}`
+                          `/dashboard/${assignmentId}/tasks/${task.id}`,
                         )
                       }
                       className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
